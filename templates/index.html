@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Prediction</title>
+    <!-- Tailwind CSS for modern styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles to ensure Inter font and smooth transitions */
+        body {
+            font-family: "Inter", sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            background-color: #f3f4f6; /* Light gray background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 1rem; /* Responsive padding */
+        }
+        .container {
+            max-width: 28rem; /* Equivalent to md:max-w-md */
+        }
+        input, button {
+            transition: all 0.2s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
+    <div class="container bg-white p-8 rounded-lg shadow-xl w-full max-w-md">
+        <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">Sales Predictor 📈</h1>
+        
+        <form id="predictionForm" class="space-y-4">
+            <div>
+                <label for="tv" class="block text-sm font-medium text-gray-700 mb-1">
+                    TV Advertising Budget ($):
+                </label>
+                <input
+                    type="number"
+                    id="tv"
+                    name="tv"
+                    required
+                    step="0.01"
+                    placeholder="e.g., 200.50"
+                    class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                />
+            </div>
+
+            <div>
+                <label for="radio" class="block text-sm font-medium text-gray-700 mb-1">
+                    Radio Advertising Budget ($):
+                </label>
+                <input
+                    type="number"
+                    id="radio"
+                    name="radio"
+                    required
+                    step="0.01"
+                    placeholder="e.g., 40.00"
+                    class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                />
+            </div>
+            
+            <button
+                type="submit"
+                class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            >
+                Predict Sales
+            </button>
+        </form>
+
+        <div id="result" class="mt-6 p-4 bg-blue-50 border-l-4 border-blue-400 text-blue-800 rounded-lg text-center font-semibold hidden">
+            <!-- Prediction result will be displayed here -->
+        </div>
+
+        <!-- Simple message box for errors or confirmations -->
+        <div id="messageBox" class="mt-4 p-3 bg-red-100 border-l-4 border-red-500 text-red-700 hidden rounded-lg">
+            <p id="messageText"></p>
+        </div>
+
+    </div>
+
+    <script>
+        // Function to show custom message box
+        function showMessage(message, type = 'error') {
+            const messageBox = document.getElementById('messageBox');
+            const messageText = document.getElementById('messageText');
+            messageText.textContent = message;
+            messageBox.className = `mt-4 p-3 border-l-4 rounded-lg ${type === 'error' ? 'bg-red-100 border-red-500 text-red-700' : 'bg-green-100 border-green-500 text-green-700'}`;
+            messageBox.classList.remove('hidden');
+            // Hide message after 5 seconds
+            setTimeout(() => {
+                messageBox.classList.add('hidden');
+            }, 5000);
+        }
+
+        document.getElementById('predictionForm').addEventListener('submit', async function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const tvInput = document.getElementById('tv');
+            const radioInput = document.getElementById('radio');
+            const resultDiv = document.getElementById('result');
+
+            // Hide previous result and message box
+            resultDiv.classList.add('hidden');
+            document.getElementById('messageBox').classList.add('hidden');
+
+            const tv = tvInput.value;
+            const radio = radioInput.value;
+
+            // Basic validation for numbers
+            if (isNaN(tv) || tv === '' || isNaN(radio) || radio === '') {
+                showMessage("Please enter valid numbers for both TV and Radio budgets.", 'error');
+                return;
+            }
+
+            console.log('Attempting to fetch prediction...');
+            console.log('Sending data:', { tv: parseFloat(tv), radio: parseFloat(radio) });
+
+            try {
+                // Use an absolute path for the fetch URL to be explicit
+                const response = await fetch('http://127.0.0.1:5000/predict', { 
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ tv: parseFloat(tv), radio: parseFloat(radio) })
+                });
+
+                console.log('Received response from server:', response);
+
+                const data = await response.json();
+                console.log('Parsed response data:', data);
+
+                if (response.ok) { // Check if the response status is 200-299
+                    if (data.predicted_sales !== undefined) {
+                        resultDiv.textContent = `Predicted Sales: $${data.predicted_sales.toFixed(2)}`;
+                        resultDiv.classList.remove('hidden');
+                        showMessage("Prediction successful!", 'success');
+                    } else {
+                        showMessage("Error: Unexpected response from server. No prediction found.", 'error');
+                    }
+                } else {
+                    showMessage(`Error from server: ${data.error || 'Something went wrong on the server.'}`, 'error');
+                }
+
+            } catch (error) {
+                console.error('Fetch error caught in JavaScript:', error);
+                showMessage(`Network error or API not reachable: ${error.message}. Please check if the server is running.`, 'error');
+            }
+        });
+    </script>
+</body>
+</html>
