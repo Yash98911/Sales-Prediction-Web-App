@@ -120,9 +120,20 @@ Project Structure:-
 Visualizations from Notebook
 
 
+## Visualizations from Notebook
+
+Here are some key visualizations from the Jupyter Notebook:
+
+
 * **Correlation Heatmap**
-    ![Correlation Heatmap](images/correlation_heatmap.png)
+
+
+    <img src="correlation_heatmap.png" alt="Correlation Heatmap" width="600" />
 * **TV vs Sales Regression Plot**
-    ![TV vs Sales Regression Plot](images/tv_sales_regplot.png)
+
+  
+    <img src="tv_sales_regplot.png" alt="TV vs Sales Regression Plot" width="600" />
 * **Radio vs Sales Regression Plot**
-    ![Radio vs Sales Regression Plot](images/radio_sales_regplot.png)
+
+  
+    <img src="radio_sales_regplot.png" alt="Radio vs Sales Regression Plot" width="600" />
