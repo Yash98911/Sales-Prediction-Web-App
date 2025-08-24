@@ -1,20 +1,19 @@
 from flask import Flask, request, jsonify, render_template
-import joblib
-import numpy as np
+import numpy as np # NumPy ab bhi chahiye calculations ke liye
 from flask_cors import CORS # Import Flask-CORS
 
 app = Flask(__name__)
 CORS(app) # Enable CORS for all routes
 
-# Load the trained model
-# Make sure 'sales_prediction_model.pkl' is in the same directory as this app.py file
-try:
-    model = joblib.load('sales_prediction_model.pkl')
-    print("Model loaded successfully!")
-except Exception as e:
-    print(f"Error loading model: {e}")
-    # Exit if the model cannot be loaded, as the app won't function without it.
-    exit()
+# --- Hardcoded Model Parameters (Replace with your actual values) ---
+# Coefficients from your trained scikit-learn model
+# EXAMPLE: [0.04576326, 0.1878508, -0.00010079]
+MODEL_COEFFICIENTS = [0.01960636, 0.03494256, 0.0010502 ]
+
+MODEL_INTERCEPT = 6.684996691788713# <<< APNI VALUES YAHAN DALO!
+# --- End of Hardcoded Model Parameters ---
+
+print("Model parameters loaded successfully!")
 
 @app.route('/')
 def home():
@@ -26,7 +25,7 @@ def home():
 def predict_sales():
     """
     Handles POST requests to /predict, processes input,
-    makes a prediction using the loaded model, and returns the result.
+    makes a prediction using the hardcoded model, and returns the result.
     """
     try:
         data = request.json
@@ -41,19 +40,19 @@ def predict_sales():
         # FEATURE ENGINEERING: Create the EXACT 3 features your model expects
         # Assuming your model was trained on: TV, Radio, TV*Radio
         tv_radio_interaction = tv * radio # This is the third feature
-        
+
         # Prepare the features for the model. It expects a 2D array with 3 features.
         # The order of features MUST match the order used during model training: [TV, Radio, TV*Radio]
         features_for_prediction = np.array([[tv, radio, tv_radio_interaction]])
-        
+
+        # Manual Prediction using hardcoded coefficients and intercept
+        # Ensure MODEL_COEFFICIENTS is a NumPy array for dot product
+        prediction = np.dot(features_for_prediction, np.array(MODEL_COEFFICIENTS).reshape(-1, 1)) + MODEL_INTERCEPT
+
         print(f"Features prepared for prediction: {features_for_prediction}")
-        # Print the shape of the features to debug any mismatch
-        print(f"Shape of features sent to model: {features_for_prediction.shape}") 
-        
-        prediction = model.predict(features_for_prediction)
-        
-        print(f"Prediction made: {prediction[0]}")
-        return jsonify({'predicted_sales': prediction[0]})
+        print(f"Shape of features sent to model: {features_for_prediction.shape}")
+        print(f"Prediction made: {prediction[0][0]}") # Access the scalar value
+        return jsonify({'predicted_sales': prediction[0][0]})
 
     except KeyError as e:
         print(f"KeyError in predict_sales: {e}")
