@@ -1,44 +1,32 @@
 📈 Sales Prediction Web App (End-to-End ML Deployment)
-
 Project Overview
-
 This project demonstrates a complete end-to-end Machine Learning pipeline for predicting product sales based on advertising spending on TV and Radio. It features a trained Linear Regression model deployed as a web application, allowing users to get real-time sales forecasts through an interactive interface.
 
-Features:- 
+This version is optimized for deployment on platforms with limited resources (like PythonAnywhere's free tier). The model's coefficients and intercept are hardcoded directly into the application, removing the need for large machine learning libraries during deployment.
 
-1.) Data Loading & EDA: Initial exploration of the advertising dataset.
+Live Website Link 🎉
+Click here to see the Sales Prediction Web App live on PythonAnywhere:
+Live App on PythonAnywhere
 
-2.) Data Cleaning: Handled unnecessary columns.
+Features
+Feature Engineering: Creates an interaction feature (TV_Radio) by multiplying TV and Radio advertising budgets.
 
-3.) Feature Engineering: Created an interaction feature (TV_Radio) by multiplying TV and Radio advertising budgets, which significantly improved model performance.
+Hardcoded Model: Uses pre-trained Linear Regression coefficients and intercept directly within the application for predictions, removing heavy ML library dependencies.
 
-4.) Model Training: Utilized Linear Regression to build a predictive model.
+Web Application (Flask Backend): A Python Flask API that processes user input and provides sales predictions.
 
-5.) Model Evaluation: Assessed model performance using metrics like R-squared, Mean Squared Error (MSE), and Mean Absolute Error (MAE), along with cross-validation.
+Interactive Frontend: A responsive web interface built with HTML, Tailwind CSS, and JavaScript for user input and displaying prediction results.
 
-6.) Model Persistence: Saved the trained model using pickle for easy loading and deployment.
+Technologies Used
+Python Libraries (Deployment):
 
-7.) Web Application (Flask Backend): A Python Flask API to load the trained model and serve predictions.
+Flask for the web framework
 
-8.) Interactive Frontend: A responsive web interface built with HTML, Tailwind CSS, and JavaScript for user input and displaying prediction results.
+NumPy for numerical operations (specifically for dot product in prediction)
 
-Technologies Used:- 
+Flask-CORS for handling cross-origin requests
 
-1.) Python Libraries:
-
-2.) pandas for data manipulation
-
-3.)numpy for numerical operations
-
-4.) scikit-learn for machine learning (Linear Regression, train_test_split, metrics)
-
-5.) matplotlib and seaborn for data visualization
-
-6.) Flask for the web framework
-
-7.) Flask-CORS for handling cross-origin requests
-
-8.) pickle for model serialization
+Gunicorn for production-ready WSGI server on PythonAnywhere
 
 Web Technologies:
 
@@ -50,15 +38,17 @@ JavaScript (ES6+)
 
 Version Control: Git & GitHub
 
-Getting Started
-Follow these steps to set up and run the project locally on your machine.
+Getting Started (Local Development - Original Approach)
+Note: The deployed version on PythonAnywhere uses hardcoded model parameters due to resource constraints. For full local development including model training with scikit-learn, refer to your original sales_prediction.ipynb and requirements.txt.
+
+Follow these steps to set up and run the optimized project locally on your machine.
 
 Prerequisites
-Python 3.8+
+Python 3.11+
 
 pip (Python package installer)
 
-Git :- 
+Git
 
 1. Clone the Repository
 First, clone this GitHub repository to your local machine:
@@ -77,63 +67,34 @@ python -m venv venv
 # On macOS/Linux
 source venv/bin/activate
 
-3. Install Dependencies
-Install all the required Python libraries:
+3. Install Dependencies (Optimized for Deployment)
+Install only the essential Python libraries for the optimized app:
 
 pip install -r requirements.txt
 
-(You might need to create a requirements.txt file first: pip freeze > requirements.txt)
-
-4. Ensure Model File Exists
-Make sure your sales_prediction_model.pkl file is present in the project root directory. If not, run the Jupyter Notebook (sales_prediction.ipynb) to train and save the model.
-
-5. Run the Flask Application
+4. Run the Flask Application (Locally)
 Navigate to the project root directory in your terminal and run the Flask app:
 
 python app.py
 
-You should see output indicating that the Flask server is running on http://127.0.0.1:5000.
+You should see output indicating that the Flask server is running on http://127.0.0.1:5000. Keep this terminal running.
 
-6. Access the Web App
+5. Access the Web App (Locally)
 Open your web browser and go to:
 
 http://127.0.0.1:5000
 
 You should see the "Sales Predictor" interface. Enter TV and Radio advertising budgets to get predictions!
 
-Project Structure:-
-
-├── app.py                      # Flask backend application
-
-├── sales_prediction.ipynb      # Jupyter Notebook for EDA, model training & evaluation
-
-├── sales_prediction_model.pkl  # Trained Linear Regression model (pickle format)
-
-├── requirements.txt            # Python dependencies
-
+Project Structure
+├── app.py                      # Flask backend application (with hardcoded model params)
+├── requirements.txt            # Python dependencies (optimized for deployment)
 ├── templates/
 │   └── index.html              # Frontend HTML for the web interface
-
 └── README.md                   # Project description and instructions
 
+Contribution
+Feel free to fork this repository, open issues, or submit pull requests.
 
-Visualizations from Notebook
-
-
-## Visualizations from Notebook
-
-Here are some key visualizations from the Jupyter Notebook:
-
-
-* **Correlation Heatmap**
-
-
-    <img src="correlation_heatmap.png" alt="Correlation Heatmap" width="600" />
-* **TV vs Sales Regression Plot**
-
-  
-    <img src="tv_sales_regplot.png" alt="TV vs Sales Regression Plot" width="600" />
-* **Radio vs Sales Regression Plot**
-
-  
-    <img src="radio_sales_regplot.png" alt="Radio vs Sales Regression Plot" width="600" />
+License
+This project is open-source and available under the MIT License.
