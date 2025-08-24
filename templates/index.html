@@ -42,7 +42,7 @@
                     id="tv"
                     name="tv"
                     required
-                    step="0.01"
+                    step="any"
                     placeholder="e.g., 200.50"
                     class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                 />
@@ -57,7 +57,7 @@
                     id="radio"
                     name="radio"
                     required
-                    step="0.01"
+                    step="any"
                     placeholder="e.g., 40.00"
                     class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                 />
@@ -121,7 +121,8 @@
 
             try {
                 // Use an absolute path for the fetch URL to be explicit
-                const response = await fetch('http://127.0.0.1:5000/predict', { 
+                // PythonAnywhere par use '/predict' or 'https://yash98911.pythonanywhere.com/predict'
+                const response = await fetch('/predict', { // <<-- Yahan 'http://127.0.0.1:5000/predict' ko '/predict' kiya hai
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
