@@ -1,8 +1,4 @@
 Flask==2.3.2
 numpy==1.24.4
-pandas==2.0.3
-scikit-learn==1.2.2  # Isse hum thoda aur purana kar rahe hain for maximum stability
-seaborn==0.12.2      # Isse bhi thoda purana kar rahe hain
-matplotlib==3.7.1    # Isse bhi thoda purana kar rahe hain
 Flask-Cors==4.0.0
 gunicorn==22.0.0
