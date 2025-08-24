@@ -1,12 +1,19 @@
 📈 Sales Prediction Web App (End-to-End ML Deployment)
+
 Project Overview
+
+
 This project demonstrates a complete end-to-end Machine Learning pipeline for predicting product sales based on advertising spending on TV and Radio. It features a trained Linear Regression model deployed as a web application, allowing users to get real-time sales forecasts through an interactive interface.
 
 This version is optimized for deployment on platforms with limited resources (like PythonAnywhere's free tier). The model's coefficients and intercept are hardcoded directly into the application, removing the need for large machine learning libraries during deployment.
 
 Live Website Link 🎉
 Click here to see the Sales Prediction Web App live on PythonAnywhere:
+
+https://yash98911.pythonanywhere.com/
+
 Live App on PythonAnywhere
+
 
 Features
 Feature Engineering: Creates an interaction feature (TV_Radio) by multiplying TV and Radio advertising budgets.
