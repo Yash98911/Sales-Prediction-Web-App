@@ -1,13 +1,11 @@
 from flask import Flask, request, jsonify, render_template
-import numpy as np # NumPy ab bhi chahiye calculations ke liye
+import numpy as np 
 from flask_cors import CORS # Import Flask-CORS
 
 app = Flask(__name__)
 CORS(app) # Enable CORS for all routes
 
 # --- Hardcoded Model Parameters (Replace with your actual values) ---
-# Coefficients from your trained scikit-learn model
-# EXAMPLE: [0.04576326, 0.1878508, -0.00010079]
 MODEL_COEFFICIENTS = [0.01960636, 0.03494256, 0.0010502 ]
 
 MODEL_INTERCEPT = 6.684996691788713# <<< APNI VALUES YAHAN DALO!
