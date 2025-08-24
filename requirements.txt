@@ -1,8 +1,8 @@
-Flask==2.3.2         # Python 3.11 ke saath compatible
-numpy==1.26.4        # Python 3.11 ke saath compatible
-pandas==2.0.3        # Python 3.11.8 ke saath stable aur compatible version
-scikit-learn==1.4.2  # Python 3.11 ke saath compatible
-seaborn==0.13.2      # Python 3.11 ke saath compatible
-matplotlib==3.8.4    # Python 3.11 ke saath compatible
-Flask-Cors==4.0.0    
-gunicorn==22.0.0 
+Flask==2.3.2
+numpy==1.24.4
+pandas==2.0.3
+scikit-learn==1.2.2  # Isse hum thoda aur purana kar rahe hain for maximum stability
+seaborn==0.12.2      # Isse bhi thoda purana kar rahe hain
+matplotlib==3.7.1    # Isse bhi thoda purana kar rahe hain
+Flask-Cors==4.0.0
+gunicorn==22.0.0
